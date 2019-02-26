@@ -1,13 +1,11 @@
 ## Requisites
 
-Pynthon 3.7
-
-
-## Installation
+- Pynthon 3.7
+- Elasticsearch library (https://elasticsearch-py.readthedocs.io/en/master/index.html)
 
 `sudo pip install elasticsearch
 `
 
-## Build
+## Run
 
-Run report.py
+Execute file : report.py
