@@ -13,7 +13,7 @@ QUERY_BY_SOURCE ={
       "must": [
         {
           "term": {
-            "metadata.source": "COM"
+            "metadata.source": "EBAY"
           }
         },
 
