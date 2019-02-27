@@ -2,3 +2,16 @@ SOURCES = ["ebay_inbound", "PRO","COM", "amazon_inbound", "API", "module_prestas
 
 HOST_LEMMINGS = "http://elasticsearch-9200.service.consul:27778/"
 HOST_LOCAL = "http://elasticsearch-9200.service.consul:9200/"
+
+
+def get_key(doc):
+    return doc['_source']['metadata']['source']
+
+def get_value(doc):
+    # doc['_source']['price']
+    return doc['_source']['additionalData']
+
+DEFAULT_TIMEOUT = 30
+DEFAULT_SIZE = 100
+DEFAULT_HOST = HOST_LEMMINGS
+DEFAULT_PATH = "/Users/valbuena/Documents/"

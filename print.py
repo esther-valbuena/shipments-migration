@@ -1,5 +1,5 @@
 import queries
-import constants
+import config
 import time
 from report import generate_report
 
@@ -23,9 +23,9 @@ def print_report(data):
     print_head_report(data)
     print_rows_report(data)
 
-def print_csv(store):
+def print_csv(store, name):
     time_name = time.strftime("%Y%m%d-%H%M%S")
-    file = open('/Users/valbuena/Documents/shipment-'+ time_name + '.csv', 'w')
+    file = open(config.DEFAULT_PATH + 'shipment-' + name + '-' + time_name + '.csv', 'w')
     max = 0
     for source in store.keys():
         store[source] = list(sorted(store[source]))
@@ -46,33 +46,26 @@ def print_csv(store):
 
 
 def print_report_all():
-    size = 100
-    host = constants.HOST_LEMMINGS
-    data = generate_report(host, queries.QUERY_ALL, size)
-    print_csv(data)
+    data = generate_report(queries.QUERY_ALL)
+    print_csv(data, 'all')
 
 
 def print_report_by_source():
 
-    #Configuration
-    size = 100
-    host = constants.HOST_LEMMINGS
-
+    store = {}
     queries.QUERY_BY_SOURCE['query']['bool']['must'][1]['range']['createdAt']['gte'] = "01/11/2018"
     queries.QUERY_BY_SOURCE['query']['bool']['must'][1]['range']['createdAt']['lte'] = "01/01/2020"
 
-    store = {}
-
     #BySource
-    for source in constants.SOURCES:
+    for source in config.SOURCES:
         print(source)
         queries.QUERY_BY_SOURCE['query']['bool']['must'][0]['term']['metadata.source'] = source
-        data = generate_report(host, queries.QUERY_BY_SOURCE, size)
+        data = generate_report(queries.QUERY_BY_SOURCE)
         if source not in data:
             data[source] = []
         store.update(data)
 
-    print_csv(store)
+    print_csv(store, 'by_source')
 
-#print_report_by_source()
+print_report_by_source()
 print_report_all()
