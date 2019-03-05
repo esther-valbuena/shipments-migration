@@ -23,12 +23,18 @@ def print_report(data):
     print_head_report(data)
     print_rows_report(data)
 
-def print_csv(store, name):
+def print_csv(store, name, isSorted):
     time_name = time.strftime("%Y%m%d-%H%M%S")
     file = open(config.DEFAULT_PATH + 'shipment-' + name + '-' + time_name + '.csv', 'w')
     max = 0
     for source in store.keys():
-        store[source] = list(sorted(store[source]))
+        my_list = []
+        if isSorted:
+            my_list = list(sorted(store[source]))
+        else:
+            my_list = list(store[source])
+
+        store[source] = my_list
         length = len(store[source])
         max = length if length > max else max
         file.write(source + ";")
@@ -47,14 +53,14 @@ def print_csv(store, name):
 
 def print_report_all():
     data = generate_report(queries.QUERY_ALL)
-    print_csv(data, 'all')
+    print_csv(data, 'all', True)
 
 
 def print_report_by_source():
 
     store = {}
-    queries.QUERY_BY_SOURCE['query']['bool']['must'][1]['range']['createdAt']['gte'] = "01/11/2018"
-    queries.QUERY_BY_SOURCE['query']['bool']['must'][1]['range']['createdAt']['lte'] = "01/01/2020"
+    #queries.QUERY_BY_SOURCE['query']['bool']['must'][1]['range']['createdAt']['gte'] = "01/11/2018"
+    #queries.QUERY_BY_SOURCE['query']['bool']['must'][1]['range']['createdAt']['lte'] = "01/01/2020"
 
     #BySource
     for source in config.SOURCES:
@@ -65,7 +71,7 @@ def print_report_by_source():
             data[source] = []
         store.update(data)
 
-    print_csv(store, 'by_source')
+    print_csv(store, 'by_source', True)
 
 print_report_by_source()
 print_report_all()

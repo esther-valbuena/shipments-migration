@@ -14,6 +14,13 @@ There is two queries:
 
 ##Configuration
 
+Open ssh tunnel
+
+`````
+ssh -vN -p 22822 packdev@lemmingsteamqa-bastion01.packitos.com -L 27777:elasticsearch-9200.service.consul:9200
+
+`````
+
 Configuration to connect to ELS 
 ````
 DEFAULT_TIMEOUT = 30            #read timeout to ELS
@@ -26,7 +33,13 @@ Configuratio about csv
 DEFAULT_PATH = "/Users/valbuena/Documents/" #path where csv files are created
 ````
 
-Configuration about which field you want to filter by source
+Configuration about which field you want to use to filter 
+``````
+def get_key(doc):
+    #return doc['_source']['metadata']['source']
+    return doc['_source']['currency']
+``````
+Configuration about which fields you want to get 
 ``````
 def get_value(doc):
     # doc['_source']['price']

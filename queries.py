@@ -1,7 +1,7 @@
 QUERY_ALL = {
     "query": {
         "range": {
-            "createdAt": {"gte": "01/01/2019","lte": "01/01/2020", "format": "dd/MM/yyyy||dd/MM/yyyy"}
+            "createdAt": {"gte": "01/01/2018","lte": "01/02/2018", "format": "dd/MM/yyyy||dd/MM/yyyy"}
         }
     }
 }
@@ -19,8 +19,8 @@ QUERY_BY_SOURCE ={
 
         { "range": {
           "createdAt": {
-            "gte": "01/01/2019",
-            "lte": "01/01/2020",
+            "gte": "01/01/2018",
+            "lte": "01/02/2018",
             "format": "dd/MM/yyyy||dd/MM/yyyy"
           }
         }
